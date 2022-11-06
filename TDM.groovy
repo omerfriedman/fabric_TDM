@@ -1,7 +1,7 @@
 pipeline{
     agent any
     parameters{
-        choice(name:'tdm ENV', choices: ['dev','test','prod'],description:'')
+        choice(name:'TDM ENV', choices: ['dev','test','prod'],description:'')
     }
     stages{
         stage('BitBucket checkout '){
@@ -14,14 +14,19 @@ pipeline{
         }
         stage('Deploy ENV Variables'){
             steps{
+                sh './Deploy_ENV.sh'
+
             }
         }    
         stage('Deploy WSs'){
             steps{
+              sh './Deploy_WSs.sh'
             }
         }
         stage('Deploy LUs'){
             steps{
+                sh './Deploy_LUs.sh'
+
             }
         }
     }               
