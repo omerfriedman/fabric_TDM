@@ -14,9 +14,9 @@ fi
 
 #check if WS deployed
 ENV_numbers=echo 'list envs;' | fabric | wc -l
-if [$ENV_numbers -gt 5]
+if [$ENV_numbers >= 5]
 then
-    echo 'list envs;' | fabric | awk '{print $1}' | cut -d '|' -f2 | head -n ($WS_numbers -2)
+    echo 'list envs;' | fabric | awk '{print $1}' | cut -d '|' -f2 | head -n ($ENV_numbers -2)
     ENV_Deploy=True
 else
     echo "Deploy ENV failed"
