@@ -10,14 +10,17 @@ tries_number=3
 if [ -d $WS_dir]
 then
     cd $fabric_scripts_dir
-    for i in {1..$tries_number}
-    do    
-        ./buildAndDeployArtifacts.sh -pd $proj -l k2_ws
-        #check script success from R&D
-        if []
-        then
+    for i in {1..$tries_number} 
+    do
+        try{    
+            ./buildAndDeployArtifacts.sh -pd $proj -l k2_ws
             ENV_Deploy=true
-        fi
+        }
+        catch (Throwable e) {
+            if [i == $tries_number]
+            then
+                echo "LU deploy failed for LU k2_ws , error: $e"
+        }
         if [ENV_Deploy=True]
         then
             break
