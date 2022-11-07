@@ -25,12 +25,15 @@ then
         else
         for i in {1..$tries_number}
         do    
-            ./buildAndDeployArtifacts.sh -pd $proj -l ${array[$loop]} 
-            #check script success from R&D
-            if []
-            then
-                LU_Deploy=true
-            fi
+            try{    
+                ./buildAndDeployArtifacts.sh -pd $proj -l ${array[$loop]}
+                ENV_Deploy=true
+            }
+            catch (Throwable e) {
+                if [i == $tries_number]
+                then
+                    echo "LU deploy failed for LU ${array[$loop]}, error: $e"
+            }
             if [LU_Deploy=True]
             then
                 break
